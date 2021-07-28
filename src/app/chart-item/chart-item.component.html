@@ -1,0 +1,61 @@
+<mat-icon 
+  class="float-right"
+  aria-hidden="false" 
+  aria-label="Close"     
+  (click)="removeChart(chartId)"
+>
+  close
+</mat-icon>
+<div [chart]="chart"></div>
+
+<div class="ml-1 flex flex-wrap justify-start bg-scroll h-32 overflow-scroll">
+  <div *ngFor="let activeSensor of activeSensors; let i index" class="flex justify-between w-auto mb-5 ml-1 mr-1 h-1">
+      <div class="mr-3 flex-1">
+        <input 
+        [(colorPicker)]="activeSensor.color" 
+        [style.background]="activeSensor.color" 
+        (colorPickerChange) ="changeSeriesColor(activeSensor.id, $event)" 
+        size="2"/>
+      </div>
+      <div class="mr-3 flex-1">
+        <mat-icon *ngIf="activeSensor.type==='bar'" 
+          aria-hidden="false" 
+          aria-label="line"     
+          (click)="changeTypeBar(activeSensor.id)"
+        >
+        timeline
+        </mat-icon>
+        <mat-icon *ngIf="activeSensor.type==='line'"
+          aria-hidden="false" 
+          aria-label="bar"     
+          (click)="changeTypeBar(activeSensor.id)"
+        >
+          bar_chart
+        </mat-icon>
+      </div>
+      <div class="flex-grow">
+        {{activeSensor.id}}
+      </div>
+      <div class="flex-1">
+        <mat-icon 
+        aria-hidden="false" 
+        aria-label="remove"     
+        (click)="removeSensor(activeSensor.id)"
+      >
+        close
+      </mat-icon>
+      </div>
+    </div>
+</div>
+<div class="ml-2" >
+  <mat-form-field appearance="fill">
+    <mat-label>Select a sensor</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let sensorId of availableSensorsId" [value]="sensorId" (click)=addSensor(sensorId)>
+        {{sensorId}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+
